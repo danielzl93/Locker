@@ -87,7 +87,7 @@ public class LockerTest {
 
         String expectFeedback = "invalid ticket";
         int capacity = 10;
-        Locker locker = new Locker(capacity, issuedTickets);
+        Locker locker = new Locker(capacity, new ArrayList<>(issuedTickets));
         try {
             String feedback = locker.pickUp(ticket);
         } catch (Exception e) {

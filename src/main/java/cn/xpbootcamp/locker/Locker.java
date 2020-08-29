@@ -52,14 +52,18 @@ public class Locker {
 
     public String pickUp(String ticket) {
         if (issuedTickets.contains(ticket)) {
-            if (expiredTickets.contains(ticket)) {
-                throw new RuntimeException("invalid ticket");
-            }
+            checkExpireTicket(ticket);
             capacity += 1;
             expiredTickets.add(ticket);
             return "success";
-        } else {
-            return "invalid ticket";
+        }
+
+        throw new RuntimeException("invalid ticket");
+    }
+
+    private void checkExpireTicket(String ticket) {
+        if (expiredTickets.contains(ticket)) {
+            throw new RuntimeException("invalid ticket");
         }
     }
 }
