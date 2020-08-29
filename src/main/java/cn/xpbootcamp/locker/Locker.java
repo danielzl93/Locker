@@ -1,14 +1,29 @@
 package cn.xpbootcamp.locker;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Locker {
     private int capacity;
     private List<String> issuedTickets;
+    private List<String> expiredTickets;
+
+    public Locker(int capacity) {
+        this.capacity = capacity;
+        this.issuedTickets = new ArrayList<>();
+        this.expiredTickets = new ArrayList<>();
+    }
 
     public Locker(int capacity, List<String> issuedTickets) {
         this.capacity = capacity;
         this.issuedTickets = issuedTickets;
+        this.expiredTickets = new ArrayList<>();
+    }
+
+    public Locker(int capacity, List<String> issuedTickets, List<String> expiredTickets) {
+        this.capacity = capacity;
+        this.issuedTickets = issuedTickets;
+        this.expiredTickets = expiredTickets;
     }
 
     public String store() {
@@ -20,6 +35,7 @@ public class Locker {
         while(issuedTickets.contains(ticket)) {
             ticket = generateTicket();
         }
+        issuedTickets.add(ticket);
         return ticket;
     }
 
@@ -36,7 +52,11 @@ public class Locker {
 
     public String pickUp(String ticket) {
         if (issuedTickets.contains(ticket)) {
+            if (expiredTickets.contains(ticket)) {
+                throw new RuntimeException("invalid ticket");
+            }
             capacity += 1;
+            expiredTickets.add(ticket);
             return "success";
         } else {
             return "invalid ticket";
