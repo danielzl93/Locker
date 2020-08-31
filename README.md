@@ -19,3 +19,10 @@
 6. 存包的位置是随机，没有顺序
 7. 不要脑补需求，及时和PO确认
 8. 不考虑并发
+
+Tasking:
+1. given 有空闲的柜子、包裹 when 存包 then 返回票据
+2. given 无空闲的柜子、包裹 when 存包 then 抛出异常-柜已满
+3. given 柜子、有效票据 when 取包 then 返回包裹
+4. given 柜子、重复票据 when 取包 then 抛出异常-重复票据
+5. given 柜子、无效票据 when 取包 then 抛出异常-无效票据

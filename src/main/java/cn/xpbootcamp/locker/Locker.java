@@ -1,69 +1,32 @@
 package cn.xpbootcamp.locker;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Locker {
-    private int capacity;
-    private List<String> issuedTickets;
-    private List<String> expiredTickets;
+    private final int capacity;
+    private final Map<Ticket, Package> ticketPackageMap = new HashMap<>();
+    private final ArrayList<Ticket> usedTicket = new ArrayList<>();
 
     public Locker(int capacity) {
         this.capacity = capacity;
-        this.issuedTickets = new ArrayList<>();
-        this.expiredTickets = new ArrayList<>();
     }
 
-    public Locker(int capacity, List<String> issuedTickets) {
-        this.capacity = capacity;
-        this.issuedTickets = issuedTickets;
-        this.expiredTickets = new ArrayList<>();
-    }
-
-    public Locker(int capacity, List<String> issuedTickets, List<String> expiredTickets) {
-        this.capacity = capacity;
-        this.issuedTickets = issuedTickets;
-        this.expiredTickets = expiredTickets;
-    }
-
-    public String store() {
-        if (capacity < 1) {
-            throw new RuntimeException("no capacity");
+    public Ticket store(Package pack) {
+        if (capacity - ticketPackageMap.size() < 1) {
+            throw new FullCapacityException("no capacity");
         }
-        capacity -= 1;
-        String ticket = generateTicket();
-        while(issuedTickets.contains(ticket)) {
-            ticket = generateTicket();
-        }
-        issuedTickets.add(ticket);
+        Ticket ticket = new Ticket();
+        ticketPackageMap.put(ticket, pack);
         return ticket;
     }
 
-    private String generateTicket() {
-        Random rand = new Random();
-        int upperbound = 99;
-        int int_random = rand.nextInt(upperbound);
-        return "barcode_" + int_random;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String pickUp(String ticket) {
-        if (issuedTickets.contains(ticket)) {
-            checkExpireTicket(ticket);
-            capacity += 1;
-            expiredTickets.add(ticket);
-            return "success";
-        }
-
-        throw new RuntimeException("invalid ticket");
-    }
-
-    private void checkExpireTicket(String ticket) {
-        if (expiredTickets.contains(ticket)) {
-            throw new RuntimeException("invalid ticket");
+    public Package pickUpPackage(Ticket ticket) {
+        if (ticketPackageMap.containsKey(ticket)) {
+            usedTicket.add(ticket);
+            return ticketPackageMap.remove(ticket);
+        } else if (usedTicket.contains(ticket)) {
+            throw new UsedTicketException("used ticket");
+        } else {
+            throw new InvalidTicketException("invalid ticket");
         }
     }
 }
