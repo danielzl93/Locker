@@ -20,9 +20,11 @@ public class Locker {
     }
 
     public Package pickUpPackage(Ticket ticket) {
-        if (ticketPackageMap.containsKey(ticket)) {
+        Package pack = ticketPackageMap.remove(ticket);
+
+        if (!Objects.isNull(pack)) {
             usedTicket.add(ticket);
-            return ticketPackageMap.remove(ticket);
+            return pack;
         } else if (usedTicket.contains(ticket)) {
             throw new UsedTicketException("used ticket");
         } else {
