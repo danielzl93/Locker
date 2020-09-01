@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 public class LockerTest {
     private int DEFAULT_CAPACITY = 2;
@@ -90,10 +91,8 @@ public class LockerTest {
     public void should_return_ticket_and_save_to_first_free_locker_when_primary_locker_robot_save_package_given_robot_manage_multiple_locker_and_only_the_first_locker_full() {
         setFullLocker(locker);
         lockers.add(new Locker(DEFAULT_CAPACITY));
-        primaryLockerRobot = new PrimaryLockerRobot(lockers);
 
         Package pack = new Package();
-        System.out.println(lockers.size());
         Ticket ticket = primaryLockerRobot.store(pack);
         Assertions.assertNotNull(ticket);
 
@@ -101,10 +100,22 @@ public class LockerTest {
         Assertions.assertTrue(primaryLockerRobot.getLockers().get(1).getTicketPackageMap().containsKey(ticket));
     }
 
+    @Test
+    public void should_throw_full_capacity_when_primary_locker_robot_save_package_given_robot_manage_multiple_locker_and_all_lockers_full() {
+        Locker fullLocker = new Locker(DEFAULT_CAPACITY);
+        setFullLocker(locker);
+        setFullLocker(fullLocker);
+        lockers.add(fullLocker);
+
+        Package pack = new Package();
+        Assertions.assertThrows(FullCapacityException.class, () -> {
+            Ticket ticket = primaryLockerRobot.store(pack);
+        });
+    }
+
     private void setFullLocker(Locker locker) {
         Package pack = new Package();
         Ticket ticket_placeholder1 = locker.store(pack);
         Ticket ticket_placeholder2 = locker.store(pack);
-        this.locker = locker;
     }
 }
