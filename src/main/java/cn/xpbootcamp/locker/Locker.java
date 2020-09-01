@@ -26,6 +26,7 @@ public class Locker {
             usedTicket.add(ticket);
             return pack;
         } else if (usedTicket.contains(ticket)) {
+            usedTicket.remove(ticket);
             throw new UsedTicketException("used ticket");
         } else {
             throw new InvalidTicketException("invalid ticket");

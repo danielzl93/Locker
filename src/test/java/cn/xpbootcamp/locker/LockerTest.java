@@ -115,8 +115,11 @@ public class LockerTest {
 
     @Test
     public void should_return_package_when_primary_locker_robot_pick_up_package_given_robot_manage_multiple_lockers_and_has_valid_ticket() {
+        setFullLocker(locker);
+        Locker freeLocker = new Locker(DEFAULT_CAPACITY);
         Package pack = new Package();
-        Ticket ticket = locker.store(pack);
+        Ticket ticket = freeLocker.store(pack);
+        lockers.add(freeLocker);
 
         Assertions.assertEquals(pack, primaryLockerRobot.pickUp(ticket));
     }
@@ -124,8 +127,26 @@ public class LockerTest {
     @Test
     public void should_throw_invalid_ticket_when_primary_locker_robot_pick_up_package_given_robot_manage_multiple_lockers_and_has_invalid_ticket() {
         setFullLocker(locker);
+        Locker freeLocker = new Locker(DEFAULT_CAPACITY);
+        Package pack = new Package();
         Ticket ticket = new Ticket();
+        lockers.add(freeLocker);
+
         Assertions.assertThrows(InvalidTicketException.class, () -> {
+            primaryLockerRobot.pickUp(ticket);
+        });
+    }
+
+    @Test
+    public void should_throw_used_ticket_and_recycle_used_ticket_when_primary_locker_robot_pick_up_package_given_robot_manage_multiple_lockers_and_has_used_ticket() {
+        setFullLocker(locker);
+        Locker freeLocker = new Locker(DEFAULT_CAPACITY);
+        Package pack = new Package();
+        Ticket ticket = freeLocker.store(pack);
+        freeLocker.pickUpPackage(ticket);
+        lockers.add(freeLocker);
+
+        Assertions.assertThrows(UsedTicketException.class, () -> {
             primaryLockerRobot.pickUp(ticket);
         });
     }
