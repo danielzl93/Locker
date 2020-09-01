@@ -31,4 +31,8 @@ public class Locker {
             throw new InvalidTicketException("invalid ticket");
         }
     }
+
+    public Map<Ticket, Package> getTicketPackageMap() {
+        return ticketPackageMap;
+    }
 }

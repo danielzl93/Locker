@@ -66,12 +66,24 @@ public class LockerTest {
         });
     }
 
-    //1. given `PrimaryLockerRobot`管理单个`locker`，`locker`有空闲 when `PrimaryLockerRobot`存包 then 返回票据，包裹存放在`locker`中
     @Test
     public void should_return_ticket_when_primary_locker_robot_save_package_given_robot_manage_single_locker_and_has_free_capacity() {
         Package pack = new Package();
         Ticket ticket = primaryLockerRobot.store(pack);
         Assertions.assertNotNull(ticket);
+    }
+
+    @Test
+    public void should_return_ticket_and_save_to_first_free_locker_when_primary_locker_robot_save_package_given_robot_manage_multiple_locker_and_all_has_free_capacity() {
+        Package pack = new Package();
+
+        lockers.add(new Locker(DEFAULT_CAPACITY));
+
+        Ticket ticket = primaryLockerRobot.store(pack);
+        Assertions.assertNotNull(ticket);
+
+        Assertions.assertTrue(primaryLockerRobot.getLockers().get(0).getTicketPackageMap().containsKey(ticket));
+        Assertions.assertFalse(primaryLockerRobot.getLockers().get(1).getTicketPackageMap().containsKey(ticket));
     }
 
     private void setFullLocker(Locker locker) {

@@ -17,4 +17,8 @@ public class PrimaryLockerRobot {
         }
         throw new FullCapacityException("all lockers are full.");
     }
+
+    public ArrayList<Locker> getLockers() {
+        return lockers;
+    }
 }
