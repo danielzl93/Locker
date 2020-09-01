@@ -11,6 +11,7 @@ public class PrimaryLockerRobot {
     public Ticket store(Package pack) {
         for (Locker locker : lockers) {
             try {
+                System.out.println(locker);
                 return locker.store(pack);
             } catch (FullCapacityException ignored) {
             }

@@ -86,6 +86,21 @@ public class LockerTest {
         Assertions.assertFalse(primaryLockerRobot.getLockers().get(1).getTicketPackageMap().containsKey(ticket));
     }
 
+    @Test
+    public void should_return_ticket_and_save_to_first_free_locker_when_primary_locker_robot_save_package_given_robot_manage_multiple_locker_and_only_the_first_locker_full() {
+        setFullLocker(locker);
+        lockers.add(new Locker(DEFAULT_CAPACITY));
+        primaryLockerRobot = new PrimaryLockerRobot(lockers);
+
+        Package pack = new Package();
+        System.out.println(lockers.size());
+        Ticket ticket = primaryLockerRobot.store(pack);
+        Assertions.assertNotNull(ticket);
+
+        Assertions.assertFalse(primaryLockerRobot.getLockers().get(0).getTicketPackageMap().containsKey(ticket));
+        Assertions.assertTrue(primaryLockerRobot.getLockers().get(1).getTicketPackageMap().containsKey(ticket));
+    }
+
     private void setFullLocker(Locker locker) {
         Package pack = new Package();
         Ticket ticket_placeholder1 = locker.store(pack);
