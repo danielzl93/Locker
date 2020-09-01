@@ -75,7 +75,7 @@ public class LockerTest {
     }
 
     @Test
-    public void should_return_ticket_and_save_to_first_free_locker_when_primary_locker_robot_save_package_given_robot_manage_multiple_locker_and_all_has_free_capacity() {
+    public void should_return_ticket_and_save_to_first_free_locker_when_primary_locker_robot_save_package_given_robot_manage_multiple_lockers_and_all_has_free_capacity() {
         Package pack = new Package();
 
         lockers.add(new Locker(DEFAULT_CAPACITY));
@@ -88,7 +88,7 @@ public class LockerTest {
     }
 
     @Test
-    public void should_return_ticket_and_save_to_first_free_locker_when_primary_locker_robot_save_package_given_robot_manage_multiple_locker_and_only_the_first_locker_full() {
+    public void should_return_ticket_and_save_to_first_free_locker_when_primary_locker_robot_save_package_given_robot_manage_multiple_lockers_and_only_the_first_locker_full() {
         setFullLocker(locker);
         lockers.add(new Locker(DEFAULT_CAPACITY));
 
@@ -101,7 +101,7 @@ public class LockerTest {
     }
 
     @Test
-    public void should_throw_full_capacity_when_primary_locker_robot_save_package_given_robot_manage_multiple_locker_and_all_lockers_full() {
+    public void should_throw_full_capacity_when_primary_locker_robot_save_package_given_robot_manage_multiple_lockers_and_all_lockers_full() {
         Locker fullLocker = new Locker(DEFAULT_CAPACITY);
         setFullLocker(locker);
         setFullLocker(fullLocker);
@@ -111,6 +111,14 @@ public class LockerTest {
         Assertions.assertThrows(FullCapacityException.class, () -> {
             Ticket ticket = primaryLockerRobot.store(pack);
         });
+    }
+
+    @Test
+    public void should_return_package_when_primary_locker_robot_pick_up_package_given_robot_manage_multiple_lockers_and_has_valid_ticket() {
+        Package pack = new Package();
+        Ticket ticket = locker.store(pack);
+
+        Assertions.assertEquals(pack, primaryLockerRobot.pickUp(ticket));
     }
 
     private void setFullLocker(Locker locker) {

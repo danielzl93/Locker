@@ -11,7 +11,6 @@ public class PrimaryLockerRobot {
     public Ticket store(Package pack) {
         for (Locker locker : lockers) {
             try {
-                System.out.println(locker);
                 return locker.store(pack);
             } catch (FullCapacityException ignored) {
             }
@@ -21,5 +20,15 @@ public class PrimaryLockerRobot {
 
     public ArrayList<Locker> getLockers() {
         return lockers;
+    }
+
+    public Package pickUp(Ticket ticket) {
+        for (Locker locker : lockers) {
+            try {
+                return locker.pickUpPackage(ticket);
+            } catch (InvalidTicketException ignored) {
+            }
+        }
+        throw new InvalidTicketException("invalid ticket");
     }
 }
