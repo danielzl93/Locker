@@ -121,6 +121,15 @@ public class LockerTest {
         Assertions.assertEquals(pack, primaryLockerRobot.pickUp(ticket));
     }
 
+    @Test
+    public void should_throw_invalid_ticket_when_primary_locker_robot_pick_up_package_given_robot_manage_multiple_lockers_and_has_invalid_ticket() {
+        setFullLocker(locker);
+        Ticket ticket = new Ticket();
+        Assertions.assertThrows(InvalidTicketException.class, () -> {
+            primaryLockerRobot.pickUp(ticket);
+        });
+    }
+
     private void setFullLocker(Locker locker) {
         Package pack = new Package();
         Ticket ticket_placeholder1 = locker.store(pack);
