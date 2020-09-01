@@ -1,16 +1,22 @@
 package cn.xpbootcamp.locker;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.ArrayList;
+
 public class LockerTest {
     private int DEFAULT_CAPACITY = 2;
-    private Locker locker = new Locker(DEFAULT_CAPACITY);
+    private Locker locker;
+    private ArrayList<Locker> lockers = new ArrayList<>();
+    private PrimaryLockerRobot primaryLockerRobot;
 
     @BeforeEach
     public void init() {
         locker = new Locker(DEFAULT_CAPACITY);
+        lockers.add(locker);
+        primaryLockerRobot = new PrimaryLockerRobot(lockers);
     }
 
     @Test
@@ -21,11 +27,14 @@ public class LockerTest {
         Assertions.assertNotNull(ticket);
     }
 
-    @Test(expected = FullCapacityException.class)
+    @Test
     public void should_throw_no_capacity_when_save_package_given_locker_has_no_capacity() {
         Package pack = new Package();
         setFullLocker(locker);
-        Ticket ticket = locker.store(pack);
+
+        Assertions.assertThrows(FullCapacityException.class, () -> {
+            Ticket ticket = locker.store(pack);
+        });
     }
 
     @Test
@@ -36,20 +45,33 @@ public class LockerTest {
         Assertions.assertEquals(ExpectPack, locker.pickUpPackage(ticket));
     }
 
-    @Test(expected = InvalidTicketException.class)
+    @Test
     public void should_throw_invalid_ticket_when_pick_up_package_given_invalid_ticket() {
         setFullLocker(locker);
         Ticket ticket = new Ticket();
-        locker.pickUpPackage(ticket);
+
+        Assertions.assertThrows(InvalidTicketException.class, () -> {
+            locker.pickUpPackage(ticket);
+        });
     }
 
-    @Test(expected = UsedTicketException.class)
+    @Test
     public void should_throw_used_ticket_when_pick_up_package_given_used_ticket() {
         Package pack = new Package();
         Ticket ticket = locker.store(pack);
         locker.pickUpPackage(ticket);
 
-        locker.pickUpPackage(ticket);
+        Assertions.assertThrows(UsedTicketException.class, () -> {
+            locker.pickUpPackage(ticket);
+        });
+    }
+
+    //1. given `PrimaryLockerRobot`管理单个`locker`，`locker`有空闲 when `PrimaryLockerRobot`存包 then 返回票据，包裹存放在`locker`中
+    @Test
+    public void should_return_ticket_when_primary_locker_robot_save_package_given_robot_manage_single_locker_and_has_free_capacity() {
+        Package pack = new Package();
+        Ticket ticket = primaryLockerRobot.store(pack);
+        Assertions.assertNotNull(ticket);
     }
 
     private void setFullLocker(Locker locker) {
