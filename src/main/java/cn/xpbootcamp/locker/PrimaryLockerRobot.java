@@ -10,24 +10,18 @@ public class PrimaryLockerRobot {
 
     public Ticket store(Package pack) {
         for (Locker locker : lockers) {
-            try {
+            if (!locker.isFull()) {
                 return locker.store(pack);
-            } catch (FullCapacityException ignored) {
             }
         }
         throw new FullCapacityException("all lockers are full.");
     }
 
-    public ArrayList<Locker> getLockers() {
-        return lockers;
-    }
-
     public Package pickUp(Ticket ticket) {
         for (Locker locker : lockers) {
-            try {
-                return locker.pickUpPackage(ticket);
-            } catch (InvalidTicketException ignored) {
-            }
+           if (locker.contains(ticket)) {
+               return locker.pickUpPackage(ticket);
+           }
         }
         throw new InvalidTicketException("invalid ticket");
     }

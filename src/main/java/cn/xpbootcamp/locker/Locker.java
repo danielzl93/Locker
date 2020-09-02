@@ -4,14 +4,13 @@ import java.util.*;
 public class Locker {
     private final int capacity;
     private final Map<Ticket, Package> ticketPackageMap = new HashMap<>();
-    private final ArrayList<Ticket> usedTicket = new ArrayList<>();
 
     public Locker(int capacity) {
         this.capacity = capacity;
     }
 
     public Ticket store(Package pack) {
-        if (capacity - ticketPackageMap.size() < 1) {
+        if (isFull()) {
             throw new FullCapacityException("no capacity");
         }
         Ticket ticket = new Ticket();
@@ -20,20 +19,19 @@ public class Locker {
     }
 
     public Package pickUpPackage(Ticket ticket) {
-        Package pack = ticketPackageMap.remove(ticket);
-
-        if (!Objects.isNull(pack)) {
-            usedTicket.add(ticket);
-            return pack;
-        } else if (usedTicket.contains(ticket)) {
-            usedTicket.remove(ticket);
-            throw new UsedTicketException("used ticket");
+        if (contains(ticket)) {
+            return ticketPackageMap.remove(ticket);
         } else {
             throw new InvalidTicketException("invalid ticket");
         }
     }
 
-    public Map<Ticket, Package> getTicketPackageMap() {
-        return ticketPackageMap;
+    public boolean contains(Ticket ticket) {
+        return ticketPackageMap.containsKey(ticket);
     }
+
+    public boolean isFull() {
+        return capacity - ticketPackageMap.size() < 1;
+    }
+
 }
