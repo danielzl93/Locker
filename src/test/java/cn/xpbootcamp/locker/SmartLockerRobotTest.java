@@ -90,4 +90,20 @@ public class SmartLockerRobotTest {
         Assertions.assertEquals(expectPack, smartLockerRobot.pickUp(ticket));
     }
 
+
+    @Test
+    public void should_throw_invalid_ticket_when_robot_pick_up_package_given_2_lockers_and_invalid_ticket() {
+        Locker secondLocker = new Locker(DEFAULT_CAPACITY);
+        lockers.add(secondLocker);
+        setLockerWithUsedSlot(firstLocker, 3);
+        setLockerWithUsedSlot(secondLocker, 1);
+
+        Package expectPack = new Package();
+        Ticket ticket = new Ticket();
+
+        Assertions.assertThrows(InvalidTicketException.class, () -> {
+            smartLockerRobot.pickUp(ticket);
+        });
+    }
+
 }
