@@ -34,4 +34,5 @@ public class Locker {
         return capacity - ticketPackageMap.size() < 1;
     }
 
+    public int getFreeSlot() { return capacity - ticketPackageMap.size(); }
 }
