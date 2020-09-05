@@ -50,4 +50,18 @@ public class SmartLockerRobotTest {
 
         Assertions.assertEquals(expectPack, secondLocker.pickUpPackage(ticket));
     }
+
+    @Test
+    public void should_return_ticket_and_store_to_1st_locker_when_robot_store_package_given_2_lockers_and_both_have_same_free_slots() {
+        Locker secondLocker = new Locker(DEFAULT_CAPACITY);
+        lockers.add(secondLocker);
+        setLockerWithUsedSlot(firstLocker, 3);
+        setLockerWithUsedSlot(secondLocker, 3);
+
+        Package expectPack = new Package();
+        Ticket ticket = smartLockerRobot.store(expectPack);
+
+        Assertions.assertEquals(expectPack, firstLocker.pickUpPackage(ticket));
+    }
+
 }
