@@ -52,3 +52,18 @@ Tasking:
 2. given `PrimaryLockerRobot`管理多个`locker`，无效票据 when `PrimaryLockerRobot`取包 then 抛出异常-无效票据
 3. given `PrimaryLockerRobot`管理多个`locker`，重复票据 when `PrimaryLockerRobot`取包 then 抛出异常-无效票据， 销毁重复票据
 
+##---------v3--------
+
+###需求：作为一个聪明的储物柜机器人,我能够将包存在空格最多的那个储物柜,并可以取出
+
+####Tasking：
+
+#####存放：
+1. given `SmartLockerRobot`管理两个`locker`，第一个`locker`有最大空闲容量 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第一个`locker`中
+2. given `SmartLockerRobot`管理两个`locker`，第二个`locker`有最大空闲容量 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第二个`locker`中
+3. given `SmartLockerRobot`管理两个`locker`，`locker`最大空闲容量相同 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第一个`locker`中
+4. given `SmartLockerRobot`管理两个`locker`，`locker`均无空闲 when `SmartLockerRobot`存包 then 抛出异常-无空闲
+
+#####取包：
+1. given `SmartLockerRobot`管理多个`locker`，有效票据 when `SmartLockerRobot`取包 then 取得包裹
+2. given `SmartLockerRobot`管理多个`locker`，无效票据 when `SmartLockerRobot`取包 then 抛出异常-无效票据
