@@ -64,4 +64,16 @@ public class SmartLockerRobotTest {
         Assertions.assertEquals(expectPack, firstLocker.pickUpPackage(ticket));
     }
 
+
+    @Test
+    public void should_throw_no_capacity_when_robot_store_package_given_2_lockers_and_all_have_0_free_slots() {
+        Locker secondLocker = new Locker(DEFAULT_CAPACITY);
+        lockers.add(secondLocker);
+        setLockerWithUsedSlot(firstLocker, 5);
+        setLockerWithUsedSlot(secondLocker, 5);
+
+        Package expectPack = new Package();
+
+        Assertions.assertThrows(FullCapacityException.class, () -> {smartLockerRobot.store(expectPack);});
+    }
 }
