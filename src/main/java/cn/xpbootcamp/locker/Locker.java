@@ -11,7 +11,7 @@ public class Locker {
 
     public Ticket store(Package pack) {
         if (isFull()) {
-            throw new FullCapacityException("no capacity");
+            throw new FullCapacityException();
         }
         Ticket ticket = new Ticket();
         ticketPackageMap.put(ticket, pack);
@@ -22,7 +22,7 @@ public class Locker {
         if (contains(ticket)) {
             return ticketPackageMap.remove(ticket);
         } else {
-            throw new InvalidTicketException("invalid ticket");
+            throw new InvalidTicketException();
         }
     }
 
