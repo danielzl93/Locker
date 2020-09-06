@@ -21,9 +21,8 @@ public class Locker {
     protected Package pickUpPackage(Ticket ticket) {
         if (contains(ticket)) {
             return ticketPackageMap.remove(ticket);
-        } else {
-            throw new InvalidTicketException();
         }
+        throw new InvalidTicketException();
     }
 
     protected boolean contains(Ticket ticket) {
