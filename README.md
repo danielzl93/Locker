@@ -59,10 +59,12 @@ Tasking:
 ####Tasking：
 
 #####存放：
-1. given `SmartLockerRobot`管理两个`locker`，第一个`locker`有最大空闲容量 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第一个`locker`中
-2. given `SmartLockerRobot`管理两个`locker`，第二个`locker`有最大空闲容量 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第二个`locker`中
-3. given `SmartLockerRobot`管理两个`locker`，`locker`最大空闲容量相同 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第一个`locker`中
-4. given `SmartLockerRobot`管理两个`locker`，`locker`均无空闲 when `SmartLockerRobot`存包 then 抛出异常-无空闲
+1. given `SmartLockerRobot`管理一个`locker`，`locker`有空闲容量 when `SmartLockerRobot`存包 then 返回票据，包裹在`locker`中
+4. given `SmartLockerRobot`管理一个`locker`，`locker`无空闲 when `SmartLockerRobot`存包 then 抛出异常-无空闲
+1. given `SmartLockerRobot`管理多个`locker`, 例如管理了两个`locker`，第一个`locker`有5个空闲容量， 第二个`locker`有2个空闲容量 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第一个`locker`中
+2. given `SmartLockerRobot`管理多个`locker`, 例如管理了两个`locker`，第一个`locker`有2个空闲容量， 第二个`locker`有3个空闲容量 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第二个`locker`中
+3. given `SmartLockerRobot`管理多个`locker`, 例如管理了两个`locker`，`locker`最大空闲容量相同 when `SmartLockerRobot`存包 then 返回票据，包裹存放在第一个`locker`中
+4. given `SmartLockerRobot`管理多个`locker`, 例如管理了两个`locker`，`locker`均无空闲 when `SmartLockerRobot`存包 then 抛出异常-无空闲
 
 #####取包：
 1. given `SmartLockerRobot`管理多个`locker`，有效票据 when `SmartLockerRobot`取包 then 取得包裹
