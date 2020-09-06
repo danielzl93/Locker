@@ -12,9 +12,9 @@ public class PrimaryLockerRobotTest {
     private PrimaryLockerRobot primaryLockerRobot;
 
     private void setFullLocker(Locker locker) {
-        Package pack = new Package();
-        Ticket ticket_placeholder1 = locker.store(pack);
-        Ticket ticket_placeholder2 = locker.store(pack);
+        Bag bag = new Bag();
+        Ticket ticket_placeholder1 = locker.store(bag);
+        Ticket ticket_placeholder2 = locker.store(bag);
     }
 
     @BeforeEach
@@ -26,21 +26,21 @@ public class PrimaryLockerRobotTest {
 
     @Test
     public void should_return_ticket_when_robot_save_package_given_robot_manage_single_locker_and_has_free_capacity() {
-        Package expectPack = new Package();
-        Ticket ticket = primaryLockerRobot.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = primaryLockerRobot.store(expectBag);
 
         Assertions.assertTrue(firstLocker.contains(ticket));
-        Assertions.assertEquals(expectPack, firstLocker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
     }
 
     @Test
     public void should_return_ticket_and_save_to_first_locker_when_save_package_given_robot_manage_multiple_lockers_all_has_space() {
-        Package expectPack = new Package();
+        Bag expectBag = new Bag();
         Locker secondLocker = new Locker(DEFAULT_CAPACITY);
         lockers.add(secondLocker);
-        Ticket ticket = primaryLockerRobot.store(expectPack);
+        Ticket ticket = primaryLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectPack, firstLocker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
     }
 
     @Test
@@ -49,11 +49,11 @@ public class PrimaryLockerRobotTest {
         Locker secondLocker = new Locker(DEFAULT_CAPACITY);
         lockers.add(secondLocker);
 
-        Package expectPack = new Package();
-        Ticket ticket = primaryLockerRobot.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = primaryLockerRobot.store(expectBag);
 
         Assertions.assertFalse(firstLocker.contains(ticket));
-        Assertions.assertEquals(expectPack, secondLocker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, secondLocker.pickUpBag(ticket));
     }
 
     @Test
@@ -63,9 +63,9 @@ public class PrimaryLockerRobotTest {
         setFullLocker(fullLocker);
         lockers.add(fullLocker);
 
-        Package pack = new Package();
+        Bag bag = new Bag();
         Assertions.assertThrows(FullCapacityException.class, () -> {
-            Ticket ticket = primaryLockerRobot.store(pack);
+            Ticket ticket = primaryLockerRobot.store(bag);
         });
     }
 
@@ -73,18 +73,17 @@ public class PrimaryLockerRobotTest {
     public void should_return_package_when_robot_pick_up_package_given_robot_manage_multiple_lockers_and_has_valid_ticket() {
         setFullLocker(firstLocker);
         Locker freeLocker = new Locker(DEFAULT_CAPACITY);
-        Package expectPack = new Package();
-        Ticket ticket = freeLocker.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = freeLocker.store(expectBag);
         lockers.add(freeLocker);
 
-        Assertions.assertEquals(expectPack, primaryLockerRobot.pickUp(ticket));
+        Assertions.assertEquals(expectBag, primaryLockerRobot.pickUp(ticket));
     }
 
     @Test
     public void should_throw_invalid_ticket_when_robot_pick_up_package_given_robot_manage_multiple_lockers_and_has_invalid_ticket() {
         setFullLocker(firstLocker);
         Locker freeLocker = new Locker(DEFAULT_CAPACITY);
-        Package expectPack = new Package();
         Ticket ticket = new Ticket();
         lockers.add(freeLocker);
 
@@ -97,9 +96,9 @@ public class PrimaryLockerRobotTest {
     public void should_throw_invalid_ticket_when_robot_pick_up_package_given_robot_manage_multiple_lockers_and_a_used_ticket() {
         setFullLocker(firstLocker);
         Locker freeLocker = new Locker(DEFAULT_CAPACITY);
-        Package pack = new Package();
-        Ticket ticket = freeLocker.store(pack);
-        freeLocker.pickUpPackage(ticket);
+        Bag bag = new Bag();
+        Ticket ticket = freeLocker.store(bag);
+        freeLocker.pickUpBag(ticket);
         lockers.add(freeLocker);
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {

@@ -14,35 +14,35 @@ public class LockerTest {
     }
 
     private void setFullLocker(Locker locker) {
-        Package pack = new Package();
-        Ticket ticket_placeholder1 = locker.store(pack);
-        Ticket ticket_placeholder2 = locker.store(pack);
+        Bag bag = new Bag();
+        Ticket ticket_placeholder1 = locker.store(bag);
+        Ticket ticket_placeholder2 = locker.store(bag);
     }
 
     @Test
     public void should_return_ticket_when_save_package_given_locker_has_free_capacity() {
-        Package pack = new Package();
-        Ticket ticket = locker.store(pack);
+        Bag bag = new Bag();
+        Ticket ticket = locker.store(bag);
 
         Assertions.assertNotNull(ticket);
     }
 
     @Test
     public void should_throw_no_capacity_when_save_package_given_locker_has_no_capacity() {
-        Package pack = new Package();
+        Bag bag = new Bag();
         setFullLocker(locker);
 
         Assertions.assertThrows(FullCapacityException.class, () -> {
-            Ticket ticket = locker.store(pack);
+            Ticket ticket = locker.store(bag);
         });
     }
 
     @Test
     public void should_return_package_when_pick_up_package_given_valid_ticket() {
-        Package expectPack = new Package();
-        Ticket ticket = locker.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = locker.store(expectBag);
 
-        Assertions.assertEquals(expectPack, locker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, locker.pickUpBag(ticket));
     }
 
     @Test
@@ -51,18 +51,18 @@ public class LockerTest {
         Ticket ticket = new Ticket();
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {
-            locker.pickUpPackage(ticket);
+            locker.pickUpBag(ticket);
         });
     }
 
     @Test
     public void should_throw_invalid_ticket_when_pick_up_package_given_used_ticket() {
-        Package pack = new Package();
-        Ticket ticket = locker.store(pack);
-        locker.pickUpPackage(ticket);
+        Bag bag = new Bag();
+        Ticket ticket = locker.store(bag);
+        locker.pickUpBag(ticket);
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {
-            locker.pickUpPackage(ticket);
+            locker.pickUpBag(ticket);
         });
     }
 }

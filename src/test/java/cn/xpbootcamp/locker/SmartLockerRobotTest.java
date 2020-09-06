@@ -15,7 +15,7 @@ public class SmartLockerRobotTest {
         int defaultCapacity = 5;
         Locker locker = new Locker(defaultCapacity);
         for (int i = 0; i < usedSlot; i++) {
-            locker.store(new Package());
+            locker.store(new Bag());
         }
         return locker;
     }
@@ -31,10 +31,10 @@ public class SmartLockerRobotTest {
         Locker locker = createLockerWithUsedSlot(0);
         lockers.add(locker);
 
-        Package expectPack = new Package();
-        Ticket ticket = smartLockerRobot.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectPack, locker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, locker.pickUpBag(ticket));
     }
 
     @Test
@@ -42,10 +42,10 @@ public class SmartLockerRobotTest {
         Locker locker = createLockerWithUsedSlot(5);
         lockers.add(locker);
 
-        Package expectPack = new Package();
+        Bag expectBag = new Bag();
 
         Assertions.assertThrows(FullCapacityException.class, () -> {
-            smartLockerRobot.store(expectPack);
+            smartLockerRobot.store(expectBag);
         });
     }
 
@@ -56,10 +56,10 @@ public class SmartLockerRobotTest {
         Locker secondLocker = createLockerWithUsedSlot(3);
         lockers.add(secondLocker);
 
-        Package expectPack = new Package();
-        Ticket ticket = smartLockerRobot.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectPack, firstLocker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
     }
 
     @Test
@@ -69,10 +69,10 @@ public class SmartLockerRobotTest {
         Locker secondLocker = createLockerWithUsedSlot(2);
         lockers.add(secondLocker);
 
-        Package expectPack = new Package();
-        Ticket ticket = smartLockerRobot.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectPack, secondLocker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, secondLocker.pickUpBag(ticket));
     }
 
     @Test
@@ -82,10 +82,10 @@ public class SmartLockerRobotTest {
         Locker secondLocker = createLockerWithUsedSlot(3);
         lockers.add(secondLocker);
 
-        Package expectPack = new Package();
-        Ticket ticket = smartLockerRobot.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectPack, firstLocker.pickUpPackage(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
     }
 
     @Test
@@ -95,10 +95,10 @@ public class SmartLockerRobotTest {
         Locker secondLocker = createLockerWithUsedSlot(5);
         lockers.add(secondLocker);
 
-        Package expectPack = new Package();
+        Bag expectBag = new Bag();
 
         Assertions.assertThrows(FullCapacityException.class, () -> {
-            smartLockerRobot.store(expectPack);
+            smartLockerRobot.store(expectBag);
         });
     }
 
@@ -109,10 +109,10 @@ public class SmartLockerRobotTest {
         Locker secondLocker = createLockerWithUsedSlot(3);
         lockers.add(secondLocker);
 
-        Package expectPack = new Package();
-        Ticket ticket = secondLocker.store(expectPack);
+        Bag expectBag = new Bag();
+        Ticket ticket = secondLocker.store(expectBag);
 
-        Assertions.assertEquals(expectPack, smartLockerRobot.pickUp(ticket));
+        Assertions.assertEquals(expectBag, smartLockerRobot.pickUp(ticket));
     }
 
 

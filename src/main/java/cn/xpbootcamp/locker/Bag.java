@@ -1,4 +1,4 @@
 package cn.xpbootcamp.locker;
 
-public class Package {
+public class Bag {
 }

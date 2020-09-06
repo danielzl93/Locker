@@ -9,12 +9,12 @@ abstract public class LockerRobot {
         this.lockers = lockers;
     }
 
-    abstract protected Ticket store(Package pack);
+    abstract protected Ticket store(Bag bag);
 
-    protected Package pickUp(Ticket ticket) {
+    protected Bag pickUp(Ticket ticket) {
         for (Locker locker : lockers) {
             if (locker.contains(ticket)) {
-                return locker.pickUpPackage(ticket);
+                return locker.pickUpBag(ticket);
             }
         }
         throw new InvalidTicketException();

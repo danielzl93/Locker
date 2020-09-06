@@ -7,10 +7,10 @@ public class PrimaryLockerRobot extends LockerRobot {
         super(lockers);
     }
 
-    protected Ticket store(Package pack) {
+    protected Ticket store(Bag bag) {
         for (Locker locker : lockers) {
             if (!locker.isFull()) {
-                return locker.store(pack);
+                return locker.store(bag);
             }
         }
         throw new FullCapacityException();
