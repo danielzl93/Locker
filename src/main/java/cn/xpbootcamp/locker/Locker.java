@@ -9,7 +9,7 @@ public class Locker {
         this.capacity = capacity;
     }
 
-    public Ticket store(Package pack) {
+    protected Ticket store(Package pack) {
         if (isFull()) {
             throw new FullCapacityException();
         }
@@ -18,7 +18,7 @@ public class Locker {
         return ticket;
     }
 
-    public Package pickUpPackage(Ticket ticket) {
+    protected Package pickUpPackage(Ticket ticket) {
         if (contains(ticket)) {
             return ticketPackageMap.remove(ticket);
         } else {
@@ -26,13 +26,13 @@ public class Locker {
         }
     }
 
-    public boolean contains(Ticket ticket) {
+    protected boolean contains(Ticket ticket) {
         return ticketPackageMap.containsKey(ticket);
     }
 
-    public boolean isFull() {
+    protected boolean isFull() {
         return capacity - ticketPackageMap.size() < 1;
     }
 
-    public int getFreeSlot() { return capacity - ticketPackageMap.size(); }
+    protected int getFreeSlot() { return capacity - ticketPackageMap.size(); }
 }
