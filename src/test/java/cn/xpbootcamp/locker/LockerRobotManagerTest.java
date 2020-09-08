@@ -102,4 +102,19 @@ public class LockerRobotManagerTest {
         });
     }
 
+    @Test
+    public void should_return_ticket_and_robot_store_bag_when_manager_store_bag_given_1_robots_and_manager_manage_1_locker_and_all_lockers_have_free_slots() {
+        ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        ArrayList<Locker> secondLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+
+        robots.add(new PrimaryLockerRobot(firstLockers));
+        LockerRobotManager manager = new LockerRobotManager(secondLockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = manager.storeWith(bag);
+
+        Assertions.assertEquals(bag, robots.get(0).pickUp(ticket));
+        Assertions.assertThrows(InvalidTicketException.class, () -> {
+            secondLockers.get(0).pickUpBag(ticket);
+        });
+    }
 }
