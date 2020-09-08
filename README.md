@@ -94,6 +94,6 @@ Tasking:
 1. given `Locker Robot Manager` 管理两个`locker`， 无`robot`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
 2. given `Locker Robot Manager` 管理两个`locker`， 无`robot`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
 3. given `Locker Robot Manager` 管理两个`robot`， 无`locker`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
-4. given `Locker Robot Manager` 管理两个`robot`， 无`locker`，有效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
+4. given `Locker Robot Manager` 管理两个`robot`， 无`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
 5. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
-6. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`，有效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
+6. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
