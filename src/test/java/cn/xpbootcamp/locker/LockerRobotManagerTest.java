@@ -30,4 +30,19 @@ public class LockerRobotManagerTest {
 
         Assertions.assertEquals(bag, firstLocker.pickUpBag(ticket));
     }
+
+    // given `Locker Robot Manager` 管理了多个`locker`， 无`robot`， 例如管理了两个`locker`，
+    // 第一个`locker`已满， 第二个`locker`有空闲容量，when `Locker Robot Manager`存包， then 返回票据，包裹存在第二个`locker`中
+    @Test
+    public void should_return_ticket_and_store_to_2nd_locker_when_manager_store_bag_given_2_lockers_no_robot_1st_locker_full_and_2nd_locker_has_free_slots() {
+        Locker firstLocker = createLockerWithUsedSlot(5);
+        Locker secondLocker = createLockerWithUsedSlot(2);
+        lockers.add(firstLocker);
+        lockers.add(secondLocker);
+        LockerRobotManager manager = new LockerRobotManager(lockers);
+        Bag bag = new Bag();
+        Ticket ticket = manager.store(bag);
+
+        Assertions.assertEquals(bag, secondLocker.pickUpBag(ticket));
+    }
 }
