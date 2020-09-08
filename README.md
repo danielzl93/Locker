@@ -80,20 +80,20 @@ Tasking:
 #### Tasking：
 
 ##### 存放：
-1. given `Locker Robot Manager` 管理两个`locker`， 无`robot`， `locker`均有空闲容量，when`Locker Robot Manager`存包， then 返回票据，包裹存在第一个`locker`中
-2. given `Locker Robot Manager` 管理两个`locker`， 无`robot`， 第一个`locker`已满， 第二个`locker`有空闲容量，when `Locker Robot Manager`存包， then 返回票据，包裹存在第二个`locker`中
-3. given `Locker Robot Manager` 管理两个`locker`， 无`robot`， `locker`均无空闲容量，when`Locker Robot Manager`存包， then 抛出异常-无空闲
-4. given `Locker Robot Manager` 管理两个`robot`， 无`locker`， `robot`管理的`locker`均有空闲容量，when`Locker Robot Manager`存包， then 返回票据， 由第一个`robot`存包 
-5. given `Locker Robot Manager` 管理两个`robot`， 无`locker`， 第一个`robot`管理的`locker`已满， 第二个`robot`管理的`locker`有空闲容量，when`Locker Robot Manager`存包， then 返回票据， 由第二个`robot`存包
-6. given `Locker Robot Manager` 管理两个`robot`， 无`locker`， `robot`管理的`locker`均无空闲容量，when`Locker Robot Manager`存包， then 抛出异常-无空闲
+1. given `Locker Robot Manager` 管理了多个`locker`， 无`robot`， 例如管理了两个`locker`， 均有空闲容量，when`Locker Robot Manager`存包， then 返回票据，包裹存在第一个`locker`中
+2. given `Locker Robot Manager` 管理了多个`locker`， 无`robot`， 例如管理了两个`locker`， 第一个`locker`已满， 第二个`locker`有空闲容量，when `Locker Robot Manager`存包， then 返回票据，包裹存在第二个`locker`中
+3. given `Locker Robot Manager` 管理了多个`locker`， 无`robot`， 例如管理了两个`locker`， `locker`均无空闲容量，when`Locker Robot Manager`存包， then 抛出异常-无空闲
+4. given `Locker Robot Manager` 管理了多个`robot`， 无`locker`， 例如管理了两个`robot`， 所有`robot`管理的`locker`均有空闲容量，when`Locker Robot Manager`存包， then 返回票据， 由第一个`robot`存包 
+5. given `Locker Robot Manager` 管理了多个`robot`， 无`locker`， 例如管理了两个`robot`， 第一个`robot`管理的`locker`已满， 第二个`robot`管理的`locker`有空闲容量，when`Locker Robot Manager`存包， then 返回票据， 由第二个`robot`存包
+6. given `Locker Robot Manager` 管理了多个`robot`， 无`locker`， 例如管理了两个`robot`， 所有`robot`管理的`locker`均无空闲容量，when`Locker Robot Manager`存包， then 抛出异常-无空闲
 7. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`， `robot`管理的`locker`和`Locker Robot Manager` 管理的`locker`均有空闲容量，when`Locker Robot Manager`存包， then 返回票据， 由`robot`存包
 8. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`， `robot`管理的`locker`已满， `Locker Robot Manager` 管理的`locker`有空闲容量，when`Locker Robot Manager`存包， then 返回票据， 由`locker`存包
 9. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`， `robot`管理的`locker`和`Locker Robot Manager` 管理的`locker`均无空闲容量，when`Locker Robot Manager`存包， then 抛出异常-无空闲
 
 ##### 取包：
-1. given `Locker Robot Manager` 管理两个`locker`， 无`robot`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
-2. given `Locker Robot Manager` 管理两个`locker`， 无`robot`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
-3. given `Locker Robot Manager` 管理两个`robot`， 无`locker`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
-4. given `Locker Robot Manager` 管理两个`robot`， 无`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
+1. given `Locker Robot Manager` 管理了多个`locker`， 无`robot`， 例如管理了两个`locker`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
+2. given `Locker Robot Manager` 管理了多个`locker`， 无`robot`， 例如管理了两个`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
+3. given `Locker Robot Manager` 管理了多个`robot`， 无`locker`， 例如管理了两个`locker`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
+4. given `Locker Robot Manager` 管理了多个`robot`， 无`locker`， 例如管理了两个`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
 5. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
 6. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
