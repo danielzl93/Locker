@@ -10,15 +10,11 @@ public class LockerRobotManager extends PrimaryLockerRobot{
     }
 
     protected Ticket storeWith(Bag bag) {
-        if (robots.isEmpty()) {
-            return super.store(bag);
-        }
         for (LockerRobot robot : robots) {
             if(!robot.areLockersFull()) {
                 return robot.store(bag);
             }
         }
-        throw new FullCapacityException();
-
+        return super.store(bag);
     }
 }
