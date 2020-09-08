@@ -212,4 +212,17 @@ public class LockerRobotManagerTest {
 
         Assertions.assertEquals(bag, manager.pickUpWith(ticket));
     }
+
+    @Test
+    public void should_throw_invalid_ticket_when_manager_pick_up_bag_given_1_robots_and_manager_manage_1_locker_and_invalid_ticket() {
+        ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        ArrayList<Locker> secondLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        robots.add(new SmartLockerRobot(secondLockers));
+        LockerRobotManager manager = new LockerRobotManager(firstLockers, robots);
+        Ticket ticket = new Ticket();
+
+        Assertions.assertThrows(InvalidTicketException.class, () -> {
+            manager.pickUp(ticket);
+        });
+    }
 }
