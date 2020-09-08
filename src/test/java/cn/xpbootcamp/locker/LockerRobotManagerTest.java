@@ -150,7 +150,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_get_bag_when_manager_store_bag_given_0_robots_and_manager_manage_2_locker_and_valid_ticket() {
+    public void should_get_bag_when_manager_pick_up_bag_given_0_robots_and_manager_manage_2_locker_and_valid_ticket() {
         ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
 
         LockerRobotManager manager = new LockerRobotManager(firstLockers, robots);
@@ -161,7 +161,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_throw_invalid_ticket_when_manager_store_bag_given_0_robots_and_manager_manage_2_locker_and_invalid_ticket() {
+    public void should_throw_invalid_ticket_when_manager_pick_up_bag_given_0_robots_and_manager_manage_2_locker_and_invalid_ticket() {
         ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
 
         LockerRobotManager manager = new LockerRobotManager(firstLockers, robots);
@@ -173,7 +173,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_return_bag_when_manager_store_bag_given_2_robots_and_manager_manage_0_locker_and_valid_ticket() {
+    public void should_return_bag_when_manager_pick_up_bag_given_2_robots_and_manager_manage_0_locker_and_valid_ticket() {
         ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
         ArrayList<Locker> secondLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
         ArrayList<Locker> lockers = new ArrayList<>();
@@ -184,5 +184,20 @@ public class LockerRobotManagerTest {
         Ticket ticket = manager.storeWith(bag);
 
         Assertions.assertEquals(bag, manager.pickUpWith(ticket));
+    }
+
+    @Test
+    public void should_throw_invalid_ticket_when_manager_pick_up_bag_given_2_robots_and_manager_manage_0_locker_and_invalid_ticket() {
+        ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        ArrayList<Locker> secondLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        ArrayList<Locker> lockers = new ArrayList<>();
+        robots.add(new SmartLockerRobot(firstLockers));
+        robots.add(new PrimaryLockerRobot(secondLockers));
+        LockerRobotManager manager = new LockerRobotManager(lockers, robots);
+        Ticket ticket = new Ticket();
+
+        Assertions.assertThrows(InvalidTicketException.class, () -> {
+            manager.pickUp(ticket);
+        });
     }
 }
