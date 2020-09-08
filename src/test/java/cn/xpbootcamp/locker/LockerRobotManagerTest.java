@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
 
 public class LockerRobotManagerTest {
-    private ArrayList<Locker> lockers = new ArrayList<>();
     private ArrayList<LockerRobot> robots = new ArrayList<>();
 
     private Locker createLockerWithUsedSlot(int usedSlot) {
@@ -18,43 +17,56 @@ public class LockerRobotManagerTest {
         return locker;
     }
 
+    private ArrayList<Locker> createLockersWithTwoLockersByUsedSlot(int firstLockerUsedSlot, int secondLockerUsedSlot) {
+        ArrayList<Locker> lockers = new ArrayList<>();
+        lockers.add(createLockerWithUsedSlot(firstLockerUsedSlot));
+        lockers.add(createLockerWithUsedSlot(secondLockerUsedSlot));
+        return lockers;
+    }
+
     @Test
     public void should_return_ticket_and_store_to_1st_locker_when_manager_store_bag_given_2_lockers_no_robot_all_locker_have_free_slots() {
-        Locker firstLocker = createLockerWithUsedSlot(3);
-        Locker secondLocker = createLockerWithUsedSlot(2);
-        lockers.add(firstLocker);
-        lockers.add(secondLocker);
-        LockerRobotManager manager = new LockerRobotManager(lockers);
+        ArrayList<Locker> lockers = createLockersWithTwoLockersByUsedSlot(3, 2);
+        LockerRobotManager manager = new LockerRobotManager(lockers, robots);
         Bag bag = new Bag();
-        Ticket ticket = manager.store(bag);
+        Ticket ticket = manager.storeWith(bag);
 
-        Assertions.assertEquals(bag, firstLocker.pickUpBag(ticket));
+        Assertions.assertEquals(bag, lockers.get(0).pickUpBag(ticket));
     }
 
     @Test
     public void should_return_ticket_and_store_to_2nd_locker_when_manager_store_bag_given_2_lockers_no_robot_1st_locker_full_and_2nd_locker_has_free_slots() {
-        Locker firstLocker = createLockerWithUsedSlot(5);
-        Locker secondLocker = createLockerWithUsedSlot(2);
-        lockers.add(firstLocker);
-        lockers.add(secondLocker);
-        LockerRobotManager manager = new LockerRobotManager(lockers);
-        Bag bag = new Bag();
-        Ticket ticket = manager.store(bag);
+        ArrayList<Locker> lockers = createLockersWithTwoLockersByUsedSlot(5, 2);
 
-        Assertions.assertEquals(bag, secondLocker.pickUpBag(ticket));
+        LockerRobotManager manager = new LockerRobotManager(lockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = manager.storeWith(bag);
+
+        Assertions.assertEquals(bag, lockers.get(1).pickUpBag(ticket));
     }
 
     @Test
     public void should_throw_no_capacity_when_manager_store_bag_given_2_lockers_no_robot_and_all_locker_have_no_free_slots() {
-        Locker firstLocker = createLockerWithUsedSlot(5);
-        Locker secondLocker = createLockerWithUsedSlot(5);
-        lockers.add(firstLocker);
-        lockers.add(secondLocker);
-        LockerRobotManager manager = new LockerRobotManager(lockers);
+        ArrayList<Locker> lockers = createLockersWithTwoLockersByUsedSlot(5, 5);
+        LockerRobotManager manager = new LockerRobotManager(lockers, robots);
         Bag bag = new Bag();
 
         Assertions.assertThrows(FullCapacityException.class,() -> {
-            manager.store(bag);
+            manager.storeWith(bag);
         });
+    }
+
+    @Test
+    public void should_return_ticket_and_1st_robot_store_bag_when_manager_store_bag_given_2_robots_and_manager_not_manager_locker_and_all_locker_have_free_slots() {
+        ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        ArrayList<Locker> secondLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+
+        robots.add(new PrimaryLockerRobot(firstLockers));
+        robots.add(new SmartLockerRobot(secondLockers));
+        ArrayList<Locker> lockers = new ArrayList<>();
+        LockerRobotManager manager = new LockerRobotManager(lockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = manager.storeWith(bag);
+        Assertions.assertEquals(bag, robots.get(0).pickUp(ticket));
     }
 }

@@ -19,4 +19,13 @@ abstract public class LockerRobot {
         }
         throw new InvalidTicketException();
     }
+
+    protected boolean areLockersFull() {
+        for (Locker locker : lockers) {
+            if (!locker.isFull()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
