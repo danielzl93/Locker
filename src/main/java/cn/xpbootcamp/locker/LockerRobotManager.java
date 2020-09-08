@@ -17,4 +17,15 @@ public class LockerRobotManager extends PrimaryLockerRobot{
         }
         return super.store(bag);
     }
+
+    protected Bag pickUpWith(Ticket ticket) {
+        try {
+            for (LockerRobot robot : robots) {
+                return robot.pickUp(ticket);
+            }
+        } catch (InvalidTicketException exception) {
+            return super.pickUp(ticket);
+        }
+        throw new InvalidTicketException();
+    }
 }

@@ -171,4 +171,18 @@ public class LockerRobotManagerTest {
             manager.pickUp(ticket);
         });
     }
+
+    @Test
+    public void should_return_bag_when_manager_store_bag_given_2_robots_and_manager_manage_0_locker_and_valid_ticket() {
+        ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        ArrayList<Locker> secondLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+        ArrayList<Locker> lockers = new ArrayList<>();
+        robots.add(new SmartLockerRobot(firstLockers));
+        robots.add(new PrimaryLockerRobot(secondLockers));
+        LockerRobotManager manager = new LockerRobotManager(lockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = manager.storeWith(bag);
+
+        Assertions.assertEquals(bag, manager.pickUpWith(ticket));
+    }
 }
