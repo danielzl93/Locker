@@ -69,4 +69,19 @@ public class LockerRobotManagerTest {
         Ticket ticket = manager.storeWith(bag);
         Assertions.assertEquals(bag, robots.get(0).pickUp(ticket));
     }
+
+    @Test
+    public void should_return_ticket_and_2nd_robot_store_bag_when_manager_store_bag_given_2_robots_and_manager_not_manager_locker_and_first_robot_locker_has_no_free_slots() {
+        ArrayList<Locker> firstLockers = createLockersWithTwoLockersByUsedSlot(5, 5);
+        ArrayList<Locker> secondLockers = createLockersWithTwoLockersByUsedSlot(2, 3);
+
+        robots.add(new PrimaryLockerRobot(firstLockers));
+        robots.add(new SmartLockerRobot(secondLockers));
+        ArrayList<Locker> lockers = new ArrayList<>();
+        LockerRobotManager manager = new LockerRobotManager(lockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = manager.storeWith(bag);
+        Assertions.assertEquals(bag, robots.get(1).pickUp(ticket));
+    }
+
 }
