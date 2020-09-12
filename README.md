@@ -109,6 +109,6 @@ Tasking:
 
 #### Tasking：
 1. given `director` 管理了一个`manager`， `manager`只管理了两个`locker`， `locker_1`的空闲容量为0，总容量为5；`locker_2`的空闲容量为3，总容量为5，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为3，总容量为10
-1. given `director` 管理了一个`manager`， `manager`管理一个`locker`，`locker`的空闲容量为4，总容量为8；一个`robot`,`robot`管理了两个`locker`,`locker_1`的空闲容量为3，总容量为5；`locker_2`的空闲容量为2，总容量为5，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为9，总容量为18
+1. given `director` 管理了一个`manager`， `manager`管理一个`locker`，`locker`的空闲容量为4，总容量为8；一个`robot`,`robot`管理了两个`locker`,`locker_1`的空闲容量为3，总容量为5；`locker_2`的空闲容量为2，总容量为5，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为9，总容量为19
 1. given `director` 管理了一个`manager`， `manager`只管理了两个`robot`， `robot_1`的空闲容量为0，总容量为8；`robot_2`的空闲容量为3，总容量为5，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为3，总容量为13
 1. given `director` 管理了一个`manager`， `manager`只管理了两个`locker`， `locker_1`的空闲容量为0，总容量为8；`locker_2`的空闲容量为3，总容量为5，存在不被管理的`locker`和`robot`，均有空闲容量，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为3，总容量为13，不被管理的`locker`和`robot`的数据不包含在报表内

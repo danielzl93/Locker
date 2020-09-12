@@ -54,7 +54,7 @@ public class LockerRobotManager implements Storable {
     public String createReport() {
         StringBuilder builder = new StringBuilder(String.format("M %d %d\n", getFreeSlot(), getCapacity()));
         for (Storable storable : storables) {
-            builder.append("\t");
+            builder.append("  ");
             builder.append(storable.createReport());
         }
         return builder.toString();

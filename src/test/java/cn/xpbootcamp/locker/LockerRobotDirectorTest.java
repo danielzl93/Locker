@@ -21,9 +21,24 @@ public class LockerRobotDirectorTest {
         LockerRobotManager manager = new LockerRobotManager(asList(firstLocker,secondLocker));
 
         LockerRobotDirector director = new LockerRobotDirector(Collections.singletonList(manager));
-        String expectedReport = "M 3 10\n\tL 0 5\n\tL 3 5\n";
+        String expectedReport = "M 3 10\n  L 0 5\n  L 3 5\n";
         String report = director.createReport();
 
         assertEquals(report, expectedReport);
+    }
+
+    @Test
+    public void should_return_report_when_summarise_statistics_given_1_manager_manages_1_lockers_and_1_robot_with_2_lockers() {
+        Locker firstLocker = createLockerWithUsedSlot(4, 8);
+        Locker robotFirstLocker = createLockerWithUsedSlot(2, 5);
+        Locker robotSecondLocker = createLockerWithUsedSlot(3, 6);
+        LockerRobotManager manager = new LockerRobotManager(asList(firstLocker,
+                new PrimaryLockerRobot(asList(robotFirstLocker, robotSecondLocker))));
+
+        LockerRobotDirector director = new LockerRobotDirector(Collections.singletonList(manager));
+        String expectedReport = "M 10 19\n  L 4 8\n  R 6 11\n\tL 3 5\n\tL 3 6\n";
+        String report = director.createReport();
+
+        assertEquals(expectedReport, report);
     }
 }
