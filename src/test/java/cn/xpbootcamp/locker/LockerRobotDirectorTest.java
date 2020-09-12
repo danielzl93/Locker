@@ -65,4 +65,25 @@ public class LockerRobotDirectorTest {
 
         assertEquals(expectedReport, report);
     }
+
+    @Test
+    public void should_return_report_when_summarise_statistics_given_1_robot_and_1_locker_not_being_managed_and_1_manager_manages_2_lockers() {
+        Locker firstRobotFirstLocker = createLockerWithUsedSlot(2, 5);
+        Locker unmanagedLocker = createLockerWithUsedSlot(7, 11);
+
+        Locker firstLocker = createLockerWithUsedSlot(3, 9);
+        Locker secondLocker = createLockerWithUsedSlot(8, 8);
+
+        SmartLockerRobot robot1 = new SmartLockerRobot(Collections.singletonList(firstRobotFirstLocker));
+
+        LockerRobotManager manager = new LockerRobotManager(asList(
+            firstLocker, secondLocker
+        ));
+
+        LockerRobotDirector director = new LockerRobotDirector(Collections.singletonList(manager));
+        String expectedReport = "M 6 17\n  L 6 9\n  L 0 8\n";
+        String report = director.createReport();
+
+        assertEquals(expectedReport, report);
+    }
 }
