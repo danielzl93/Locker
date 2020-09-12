@@ -30,7 +30,7 @@ public class PrimaryLockerRobotTest {
         Ticket ticket = primaryLockerRobot.store(expectBag);
 
         Assertions.assertTrue(firstLocker.contains(ticket));
-        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpWith(ticket));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PrimaryLockerRobotTest {
         lockers.add(secondLocker);
         Ticket ticket = primaryLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpWith(ticket));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PrimaryLockerRobotTest {
         Ticket ticket = primaryLockerRobot.store(expectBag);
 
         Assertions.assertFalse(firstLocker.contains(ticket));
-        Assertions.assertEquals(expectBag, secondLocker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, secondLocker.pickUpWith(ticket));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class PrimaryLockerRobotTest {
         Ticket ticket = freeLocker.store(expectBag);
         lockers.add(freeLocker);
 
-        Assertions.assertEquals(expectBag, primaryLockerRobot.pickUp(ticket));
+        Assertions.assertEquals(expectBag, primaryLockerRobot.pickUpWith(ticket));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PrimaryLockerRobotTest {
         lockers.add(freeLocker);
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {
-            primaryLockerRobot.pickUp(ticket);
+            primaryLockerRobot.pickUpWith(ticket);
         });
     }
 
@@ -98,11 +98,11 @@ public class PrimaryLockerRobotTest {
         Locker freeLocker = new Locker(DEFAULT_CAPACITY);
         Bag bag = new Bag();
         Ticket ticket = freeLocker.store(bag);
-        freeLocker.pickUpBag(ticket);
+        freeLocker.pickUpWith(ticket);
         lockers.add(freeLocker);
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {
-            primaryLockerRobot.pickUp(ticket);
+            primaryLockerRobot.pickUpWith(ticket);
         });
     }
 }

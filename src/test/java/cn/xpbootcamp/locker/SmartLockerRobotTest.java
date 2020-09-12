@@ -34,7 +34,7 @@ public class SmartLockerRobotTest {
         Bag expectBag = new Bag();
         Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectBag, locker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, locker.pickUpWith(ticket));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class SmartLockerRobotTest {
         Bag expectBag = new Bag();
         Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpWith(ticket));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class SmartLockerRobotTest {
         Bag expectBag = new Bag();
         Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectBag, secondLocker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, secondLocker.pickUpWith(ticket));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class SmartLockerRobotTest {
         Bag expectBag = new Bag();
         Ticket ticket = smartLockerRobot.store(expectBag);
 
-        Assertions.assertEquals(expectBag, firstLocker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, firstLocker.pickUpWith(ticket));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class SmartLockerRobotTest {
         Bag expectBag = new Bag();
         Ticket ticket = secondLocker.store(expectBag);
 
-        Assertions.assertEquals(expectBag, smartLockerRobot.pickUp(ticket));
+        Assertions.assertEquals(expectBag, smartLockerRobot.pickUpWith(ticket));
     }
 
 
@@ -126,7 +126,7 @@ public class SmartLockerRobotTest {
         Ticket ticket = new Ticket();
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {
-            smartLockerRobot.pickUp(ticket);
+            smartLockerRobot.pickUpWith(ticket);
         });
     }
 

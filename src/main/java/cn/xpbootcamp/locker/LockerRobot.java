@@ -1,26 +1,27 @@
 package cn.xpbootcamp.locker;
 
-import java.util.ArrayList;
 
-abstract public class LockerRobot {
-    protected ArrayList<Locker> lockers;
+import java.util.List;
 
-    protected LockerRobot(ArrayList<Locker> lockers) {
+abstract public class LockerRobot implements Storable {
+    protected List<Locker> lockers;
+
+    protected LockerRobot(List<Locker> lockers) {
         this.lockers = lockers;
     }
-
-    abstract protected Ticket store(Bag bag);
-
-    protected Bag pickUp(Ticket ticket) {
+    @Override
+    public abstract Ticket store(Bag bag);
+    @Override
+    public Bag pickUpWith(Ticket ticket) {
         for (Locker locker : lockers) {
             if (locker.contains(ticket)) {
-                return locker.pickUpBag(ticket);
+                return locker.pickUpWith(ticket);
             }
         }
         throw new InvalidTicketException();
     }
-
-    protected boolean areLockersFull() {
+    @Override
+    public boolean isFull() {
         for (Locker locker : lockers) {
             if (!locker.isFull()) {
                 return false;

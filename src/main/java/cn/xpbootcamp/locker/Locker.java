@@ -1,7 +1,7 @@
 package cn.xpbootcamp.locker;
 import java.util.*;
 
-public class Locker {
+public class Locker implements Storable {
     private final int capacity;
     private final Map<Ticket, Bag> ticketPackageMap = new HashMap<>();
 
@@ -9,7 +9,8 @@ public class Locker {
         this.capacity = capacity;
     }
 
-    protected Ticket store(Bag bag) {
+    @Override
+    public Ticket store(Bag bag) {
         if (isFull()) {
             throw new FullCapacityException();
         }
@@ -17,8 +18,8 @@ public class Locker {
         ticketPackageMap.put(ticket, bag);
         return ticket;
     }
-
-    protected Bag pickUpBag(Ticket ticket) {
+    @Override
+    public Bag pickUpWith(Ticket ticket) {
         if (contains(ticket)) {
             return ticketPackageMap.remove(ticket);
         }
@@ -29,7 +30,8 @@ public class Locker {
         return ticketPackageMap.containsKey(ticket);
     }
 
-    protected boolean isFull() {
+    @Override
+    public boolean isFull() {
         return capacity - ticketPackageMap.size() < 1;
     }
 

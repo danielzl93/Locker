@@ -42,7 +42,7 @@ public class LockerTest {
         Bag expectBag = new Bag();
         Ticket ticket = locker.store(expectBag);
 
-        Assertions.assertEquals(expectBag, locker.pickUpBag(ticket));
+        Assertions.assertEquals(expectBag, locker.pickUpWith(ticket));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class LockerTest {
         Ticket ticket = new Ticket();
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {
-            locker.pickUpBag(ticket);
+            locker.pickUpWith(ticket);
         });
     }
 
@@ -59,10 +59,10 @@ public class LockerTest {
     public void should_throw_invalid_ticket_when_pick_up_package_given_used_ticket() {
         Bag bag = new Bag();
         Ticket ticket = locker.store(bag);
-        locker.pickUpBag(ticket);
+        locker.pickUpWith(ticket);
 
         Assertions.assertThrows(InvalidTicketException.class, () -> {
-            locker.pickUpBag(ticket);
+            locker.pickUpWith(ticket);
         });
     }
 }
