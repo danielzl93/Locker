@@ -32,11 +32,35 @@ public class LockerRobotDirectorTest {
         Locker firstLocker = createLockerWithUsedSlot(4, 8);
         Locker robotFirstLocker = createLockerWithUsedSlot(2, 5);
         Locker robotSecondLocker = createLockerWithUsedSlot(3, 6);
-        LockerRobotManager manager = new LockerRobotManager(asList(firstLocker,
-                new PrimaryLockerRobot(asList(robotFirstLocker, robotSecondLocker))));
+        LockerRobotManager manager = new LockerRobotManager(asList(
+                firstLocker,
+                new PrimaryLockerRobot(asList(
+                        robotFirstLocker,
+                        robotSecondLocker)
+                )));
 
         LockerRobotDirector director = new LockerRobotDirector(Collections.singletonList(manager));
         String expectedReport = "M 10 19\n  L 4 8\n  R 6 11\n\tL 3 5\n\tL 3 6\n";
+        String report = director.createReport();
+
+        assertEquals(expectedReport, report);
+    }
+
+    @Test
+    public void should_return_report_when_summarise_statistics_given_1_manager_manages_1st_robot_with_2_lockers_and_2nd_robot_with_3_lockers() {
+        Locker firstRobotFirstLocker = createLockerWithUsedSlot(2, 5);
+        Locker firstRobotSecondLocker = createLockerWithUsedSlot(7, 11);
+        Locker secondRobotFirstLocker = createLockerWithUsedSlot(3, 9);
+        Locker secondRobotSecondLocker = createLockerWithUsedSlot(8, 8);
+        Locker secondRobotThirdLocker = createLockerWithUsedSlot(2, 4);
+
+        LockerRobotManager manager = new LockerRobotManager(asList(
+                new SmartLockerRobot(asList(firstRobotFirstLocker, firstRobotSecondLocker)),
+                new PrimaryLockerRobot(asList(secondRobotFirstLocker, secondRobotSecondLocker, secondRobotThirdLocker))
+        ));
+
+        LockerRobotDirector director = new LockerRobotDirector(Collections.singletonList(manager));
+        String expectedReport = "M 15 37\n  R 7 16\n\tL 3 5\n\tL 4 11\n  R 8 21\n\tL 6 9\n\tL 0 8\n\tL 2 4\n";
         String report = director.createReport();
 
         assertEquals(expectedReport, report);
