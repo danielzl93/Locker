@@ -97,3 +97,18 @@ Tasking:
 4. given `Locker Robot Manager` 管理了多个`robot`， 无`locker`， 例如管理了两个`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
 5. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`，有效票据，when`Locker Robot Manager`取包， then 取得包裹
 6. given `Locker Robot Manager` 管理一个`robot`， 一个`locker`，无效票据，when`Locker Robot Manager`取包， then 抛出异常-无效票据
+
+## ---------v5--------
+需求：作为储物柜机器人主管(Locker Robot Director)，我希望看到一张报表，能够反映出我管理的储物柜的存取包情况
+需求澄清：
+1. 报表中不区分PrimaryLockerRobot和SmartLockerRobot，两者都是Robot
+2. 系统中一定存在LockerRobotManager
+3. 可以存在多个LockerRobotManager
+4. 不被Manager管理的Robot/Locker不计入报表
+
+
+#### Tasking：
+1. given `director` 管理了一个`manager`， `manager`只管理了两个`locker`， `locker_1`的空闲容量为0，总容量为5；`locker_2`的空闲容量为3，总容量为5，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为3，总容量为10
+1. given `director` 管理了一个`manager`， `manager`管理一个`locker`，`locker`的空闲容量为4，总容量为8；一个`robot`,`robot`管理了两个`locker`,`locker_1`的空闲容量为3，总容量为5；`locker_2`的空闲容量为2，总容量为5，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为9，总容量为18
+1. given `director` 管理了一个`manager`， `manager`只管理了两个`robot`， `robot_1`的空闲容量为0，总容量为8；`robot_2`的空闲容量为3，总容量为5，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为3，总容量为13
+1. given `director` 管理了一个`manager`， `manager`只管理了两个`locker`， `locker_1`的空闲容量为0，总容量为8；`locker_2`的空闲容量为3，总容量为5，存在不被管理的`locker`和`robot`，均有空闲容量，when 统计报表， then 返回符合报表，格式符合要求，`manager`的空闲容量为3，总容量为13，不被管理的`locker`和`robot`的数据不包含在报表内
