@@ -49,4 +49,24 @@ public class LockerRobotManager implements Storable {
         }
         return true;
     }
+
+    @Override
+    public String createReport() {
+        StringBuilder builder = new StringBuilder(String.format("M %d %d\n", getFreeSlot(), getCapacity()));
+        for (Storable storable : storables) {
+            builder.append("\t");
+            builder.append(storable.createReport());
+        }
+        return builder.toString();
+    }
+
+    @Override
+    public int getFreeSlot() {
+        return storables.stream().mapToInt(Storable::getFreeSlot).sum();
+    }
+
+    @Override
+    public int getCapacity() {
+        return storables.stream().mapToInt(Storable::getCapacity).sum();
+    }
 }

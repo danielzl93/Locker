@@ -7,4 +7,9 @@ public interface Storable {
 
     boolean isFull();
 
+    String createReport();
+
+    int getFreeSlot();
+
+    int getCapacity();
 }

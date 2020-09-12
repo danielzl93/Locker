@@ -18,6 +18,7 @@ public class Locker implements Storable {
         ticketPackageMap.put(ticket, bag);
         return ticket;
     }
+
     @Override
     public Bag pickUpWith(Ticket ticket) {
         if (contains(ticket)) {
@@ -35,5 +36,17 @@ public class Locker implements Storable {
         return capacity - ticketPackageMap.size() < 1;
     }
 
-    protected int getFreeSlot() { return capacity - ticketPackageMap.size(); }
+    @Override
+    public String createReport() {
+        return String.format("L %d %d\n", getFreeSlot(), getCapacity());
+    }
+
+    @Override
+    public int getFreeSlot() { return capacity - ticketPackageMap.size(); }
+
+    @Override
+    public int getCapacity() {
+        return capacity;
+    }
+
 }

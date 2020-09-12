@@ -9,8 +9,10 @@ abstract public class LockerRobot implements Storable {
     protected LockerRobot(List<Locker> lockers) {
         this.lockers = lockers;
     }
+
     @Override
     public abstract Ticket store(Bag bag);
+
     @Override
     public Bag pickUpWith(Ticket ticket) {
         for (Locker locker : lockers) {
@@ -28,5 +30,24 @@ abstract public class LockerRobot implements Storable {
             }
         }
         return true;
+    }
+
+    public int getFreeSlot() {
+        return lockers.stream().mapToInt(Locker::getFreeSlot).sum();
+    }
+
+    public int getCapacity() {
+        return lockers.stream().mapToInt(Locker::getCapacity).sum();
+    }
+
+    @Override
+    public String createReport() {
+        StringBuilder builder = new StringBuilder(String.format("R %d %d\n", getFreeSlot(), getCapacity()));
+
+        for (Locker locker : lockers) {
+            builder.append("\t");
+            builder.append(locker.createReport());
+        }
+        return builder.toString();
     }
 }
